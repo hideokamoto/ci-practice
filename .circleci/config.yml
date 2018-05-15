@@ -45,13 +45,12 @@ jobs:
           name: install Serverless Framework
           command: |
             sudo npm -g install serverless@1.23.0
-            chmod -R +x ./ci/*
       - run:
           name: init-serverless-config
           command: sls config credentials -k ${AWS_ACCESS_KEY} -s ${AWS_SECRET_KEY} -p aws
       - deploy:
           name: deploy for development
-          command: ./ci/deploy_development.sh
+          command: sls deploy --stage development --verbose
 
   deploy-prod:
     docker:
@@ -66,13 +65,12 @@ jobs:
           name: install Serverless Framework
           command: |
             sudo npm -g install serverless@1.23.0
-            chmod -R +x ./ci/*
       - run:
           name: init-serverless-config
           command: sls config credentials -k ${AWS_ACCESS_KEY} -s ${AWS_SECRET_KEY} -p aws
       - deploy:
           name: deploy for production
-          command: ./ci/deploy_production.sh
+          command: sls deploy --stage production --verbose
 
 workflows:
   version: 2
